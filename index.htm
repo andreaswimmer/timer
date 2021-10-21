@@ -9,35 +9,7 @@
         padding: 4px;
       }
     </style>
-  </head>
-
-  <body>
-    <table>
-      <tr>
-        <td>Entwertbare Tests</td>
-        <td id='vergangenheit'></td>
-      </tr>
-      <tr>
-        <td>Aktuelle Uhrzeit</td>
-        <td id='aktuell'></td>
-      </tr>
-    </table>
-    <button onclick='startTimer()'>Start timer</button>
-
-    <input id='chosenDifference' type='number' style='width:3em' value='15' onblur='thereMustAlwaysBeAValueInChosenDifference()' /> <label for="chosenDifference">Minuten</label>
-
-    <table class='styled-table'>
-      <thead>
-        <tr>
-          <th>Start</th>
-          <th>Verbleibend</th>
-          <th>Ende</th>
-        </tr>
-      </thead>
-      <tbody id='timers' />
-    </table>
-
-  <script>
+    <script>
     function sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
     }
@@ -109,5 +81,34 @@
 
     main();
     </script>
+  </head>
+
+  <body>
+    <table>
+      <tr>
+        <td>Entwertbare Tests</td>
+        <td id='vergangenheit'></td>
+      </tr>
+      <tr>
+        <td>Aktuelle Uhrzeit</td>
+        <td id='aktuell'></td>
+      </tr>
+    </table>
+    <button onclick='startTimer()'>Start timer</button>
+
+    <input id='chosenDifference' type='number' style='width:3em' value='15' onblur='thereMustAlwaysBeAValueInChosenDifference()' /> <label for="chosenDifference">Minuten</label>
+
+    <table class='styled-table'>
+      <thead>
+        <tr>
+          <th>Start</th>
+          <th>Verbleibend</th>
+          <th>Ende</th>
+        </tr>
+      </thead>
+      <tbody id='timers' />
+    </table>
+
+  
   </body>
 </html>
