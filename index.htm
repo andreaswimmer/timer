@@ -1,0 +1,112 @@
+<html>
+  <head>
+      <style type="text/css" media="screen">
+        .styled-table tbody tr:nth-of-type(even) {
+          background-color: #f3f3f3;
+        }
+      td, th {
+        text-align: left;
+        padding: 4px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <table>
+      <tr>
+        <td>Entwertbare Tests</td>
+        <td id='vergangenheit'></td>
+      </tr>
+      <tr>
+        <td>Aktuelle Uhrzeit</td>
+        <td id='aktuell'></td>
+      </tr>
+    </table>
+    <button onclick='startTimer()'>Start timer</button>
+
+    <input id='chosenDifference' type='number' style='width:3em' value='15' onblur='thereMustAlwaysBeAValueInChosenDifference()' /> <label for="chosenDifference">Minuten</label>
+
+    <table class='styled-table'>
+      <thead>
+        <tr>
+          <th>Start</th>
+          <th>Verbleibend</th>
+          <th>Ende</th>
+        </tr>
+      </thead>
+      <tbody id='timers' />
+    </table>
+
+  <script>
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function thereMustAlwaysBeAValueInChosenDifference() {
+      let parsed = parseInt(chosenDifference.value, 10);
+      if ((chosenDifference.value == '') || isNaN(parsed) || (parsed < 1)) {
+        chosenDifference.value = '15';
+        parsed = 15;
+      }
+      return parsed * 60 * 1000;
+
+    }
+
+    function deleteButton(id) {
+      document.getElementById(id).remove();
+    }
+
+
+    let nextId = 0;
+    const timers = document.getElementById('timers');
+
+    function startTimer() {
+      const current = new Date();
+      const row = timers.insertRow(-1);
+      const id = "row" + nextId++;
+      row.id = id;
+      row.data = new Date(current.getTime() + thereMustAlwaysBeAValueInChosenDifference());
+      row.class = 'active-row';
+      const cell0 = row.insertCell(0).innerText = current.toLocaleTimeString();
+      const cell1 = row.insertCell(1);
+      const cell2 = row.insertCell(2).innerText = row.data.toLocaleTimeString();
+      cell0.class = 'active-row';
+      const cell3 = row.insertCell(3).innerHTML = `<button onclick='deleteButton("${id}")'>🗑</button>`;
+      updateRow(row);
+    }
+
+    function remain(end) {
+      const current = new Date();
+      const diff = Math.floor((end - current) / 1000);
+      const minutes = Math.ceil(diff / 60);
+      const seconds = Math.floor(diff % 60)
+
+      if (minutes > 1) {
+        return `${minutes} Minuten`;
+      } else if (seconds > 0) {
+        return `${seconds} Sekunde${seconds>1 ? "n" : ""}`;
+      } else {
+        return '<i>Fertig</i>';
+      }
+    }
+
+    function updateRow(row) {
+      row.cells[1].innerHTML = remain(row.data);
+    }
+
+    async function main() {
+      while (true) {
+        const currentTime = new Date();
+        document.getElementById('aktuell').innerText = currentTime.toLocaleTimeString();
+        document.getElementById('vergangenheit').innerText = new Date(currentTime - thereMustAlwaysBeAValueInChosenDifference()).toLocaleTimeString();
+
+        for (var row of timers.rows) {
+          updateRow(row);
+        }
+        await sleep(500);
+      }
+    }
+
+    main();
+  </body>
+</html>
