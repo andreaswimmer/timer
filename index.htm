@@ -1,28 +1,55 @@
 <html>
   <head>
-    <style type="text/css" media="screen">
-        .styled-table tbody tr:nth-of-type(even) {
-          background-color: #f3f3f3;
-        }
+    <style type="text/css">
+      /*Begin background gradient*/
+      header {
+        height: 100%; 
+        width: 100%;
+      }
+      .background-gradient {
+        background: #c31432; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #c31432, #240b36); /* Chrome 10-25, Safari 5.1-6 */
+        background:         linear-gradient(to right, #c31432, #240b36); /* W3C, IE 10+, Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      }
+      body {
+        margin: 0px;
+      }
+      /*End background gradient*/
+      .styled-table {
+        border-collapse: collapse;
+      }
+      /*For icons in links*/
+      .text-sized { 
+        height: 1em;
+      }
+      .inverted {
+        filter: invert(100%);
+      }
+      .styled-table tbody tr:nth-of-type(odd) {
+        background-color: #501250;
+      }
       td, th {
         text-align: left;
-        padding: 4px;
+        padding: 5px;
       }
     </style>
   </head>
-
-  <body>
+<header class="header background-gradient" id="header" />
+  <body  text="#ffffff" link="#000000">
     <table>
       <tr>
         <td>Entwertbare Tests</td>
         <td id="vergangenheit"></td>
+        <td><!-- iframe src="https://free.timeanddate.com/clock/i81zgrr0/n259/szw110/szh110/hoc000/hbw4/cf100/hgr0/fiv0/fdi60/mqc000/mqs3/mql25/mqw6/mqd96/mhc000/mhs3/mhl20/mhw6/mhd96/mmc000/mms3/mml10/mmw2/mmd96/hhw16/hmw16/hmr4/hsc000/hss3/hsl90" frameborder="0" width="110" height="110"></iframe-->
+</td>
       </tr>
       <tr>
         <td>Aktuelle Uhrzeit</td>
-        <td id="aktuell"></td>
+        <td> <span id="aktuell" /> <!-- iframe src="https://free.timeanddate.com/clock/i81zgrr0/n259/szw110/szh110/hoc000/hbw4/cf100/hgr0/fiv0/fdi60/mqc000/mqs3/mql25/mqw6/mqd96/mhc000/mhs3/mhl20/mhw6/mhd96/mmc000/mms3/mml10/mmw2/mmd96/hhw16/hmw16/hmr4/hsc000/hss3/hsl90" frameborder="0" width="110" height="110"></iframe-->
+</td>
       </tr>
     </table>
-    <button onclick="startTimer()">Start timer</button>
+    
 
     <input
       id="chosenDifference"
@@ -32,7 +59,8 @@
       onblur="thereMustAlwaysBeAValueInChosenDifference()"
     />
     <label for="chosenDifference">Minuten</label>
-
+    <button onclick="startTimer()">Timer Starten</button>
+    
     <table class="styled-table">
       <thead>
         <tr>
@@ -101,11 +129,14 @@
         row.cells[1].innerHTML = remain(row.data);
       }
 
+
       async function main() {
+        const aktuell = document.getElementById('aktuell');
+        const vergangenheit = document.getElementById('vergangenheit');
         while (true) {
           const currentTime = new Date();
-          document.getElementById('aktuell').innerText = currentTime.toLocaleTimeString();
-          document.getElementById('vergangenheit').innerText = new Date(currentTime - thereMustAlwaysBeAValueInChosenDifference()).toLocaleTimeString();
+          aktuell.innerText = currentTime.toLocaleTimeString();
+          vergangenheit.innerText = new Date(currentTime - thereMustAlwaysBeAValueInChosenDifference()).toLocaleTimeString();
 
           for (var row of timers.rows) {
             updateRow(row);
@@ -117,4 +148,10 @@
       main();
     </script>
   </body>
+  <footer>
+    <div style="position: absolute; bottom: 10px; right: 10px; text-align:right">
+      <a href="https://andreaswimmer.github.io/timer"  style="color:inherit"><img src="https://www.w3.org/html/logo/downloads/HTML5_Badge.svg" class="text-sized">andreaswimmer.github.io/timer</a><br/>
+      <a href="https://github.com/andreaswimmer/timer" style="color:inherit"><img src="https://github.com/favicon.ico" class="text-sized inverted">github.com/andreaswimmer/timer</a>
+    </div>
+  </footer>
 </html>
