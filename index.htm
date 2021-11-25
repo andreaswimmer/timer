@@ -90,9 +90,14 @@
 
       function thereMustAlwaysBeAValueInChosenDifference() {
         let parsed = parseInt(chosenDifference.value, 10);
-        if ((chosenDifference.value == '') || isNaN(parsed) || (parsed < 1)) {
+        if ((chosenDifference.value == '') || isNaN(parsed) || (parsed == 0)) {
           chosenDifference.value = '15';
           parsed = 15;
+        }
+        if (parsed < 0 ) {
+          document.getElementById('vergangenheit_label').innerText = "Zu schreibende Zeit";
+        } else {
+          document.getElementById('vergangenheit_label').innerText = "Entwertbare Tests";
         }
         return parsed * 60 * 1000;
 
@@ -113,7 +118,7 @@
         const row = timers.insertRow(-1);
         const id = "row" + nextId++;
         row.id = id;
-        row.data = new Date(current.getTime() + thereMustAlwaysBeAValueInChosenDifference());
+        row.data = new Date(current.getTime() + Math.abs(thereMustAlwaysBeAValueInChosenDifference()));
         row.class = 'active-row';
         const cell0 = row.insertCell(0).innerText = current.toLocaleTimeString();
         const cell1 = row.insertCell(1);
