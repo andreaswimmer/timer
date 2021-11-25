@@ -1,14 +1,19 @@
-﻿ <!doctype html>
+﻿<!doctype html>
 <html lang="de">
   <head>
     <title>Antigen Timer</title>
     <link rel="icon" type="image/x-icon" href="favicon.png?1">
     <style>
-      /*Begin background gradient*/
-      header {
-        height: 100%; 
-        width: 100%;
+      a {
+        color: inherit;
       }
+      .trash {
+        background-color: transparent;
+        color: white;
+        border: 0px;
+        border-radius: 4px;
+      }
+      /*Begin background gradient*/
       .background-gradient {
         background: #c31432; /* fallback for old browsers */
         background: -webkit-linear-gradient(to right, #c31432, #240b36); /* Chrome 10-25, Safari 5.1-6 */
@@ -16,6 +21,7 @@
       }
       body {
         margin: 0px;
+		color: #ffffff;
       }
       /*End background gradient*/
       .styled-table {
@@ -25,11 +31,14 @@
       .text-sized { 
         height: 1em;
       }
-      .inverted {
-        filter: invert(100%);
-      }
       .styled-table tbody tr:nth-of-type(odd) {
         background-color: #501250;
+      }
+      .styled-table tbody tr:nth-of-type(even) {
+        background-color: #5d001e;
+      }
+      button:nth-child(odd) {
+        background-color: #111111;
       }
       td, th {
         text-align: left;
@@ -38,7 +47,7 @@
     </style>
   </head>
 
-  <body  text="#ffffff" link="#000000" class="header background-gradient">
+  <body class="header background-gradient">
     <table>
       <tr>
         <td id="vergangenheit_label">Entwertbare Tests</td>
@@ -110,7 +119,7 @@
         const cell1 = row.insertCell(1);
         const cell2 = row.insertCell(2).innerText = row.data.toLocaleTimeString();
         cell0.class = 'active-row';
-        const cell3 = row.insertCell(3).innerHTML = `<button onclick='deleteButton("${id}")'>🗑</button>`;
+        const cell3 = row.insertCell(3).innerHTML = `<button class="trash" onclick='deleteButton("${id}")'>🗑</button>`;
         updateRow(row);
       }
 
