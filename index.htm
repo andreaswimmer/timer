@@ -1,6 +1,8 @@
-﻿<html>
+﻿ <!doctype html>
+<html lang="de">
   <head>
-    <style type="text/css">
+    <title>Antigen Timer</title>
+    <style>
       /*Begin background gradient*/
       header {
         height: 100%; 
@@ -34,19 +36,18 @@
       }
     </style>
   </head>
-<header class="header background-gradient" id="header" />
-  <body  text="#ffffff" link="#000000">
+
+  <body  text="#ffffff" link="#000000" class="header background-gradient">
     <table>
       <tr>
-        <td>Entwertbare Tests</td>
-        <td id="vergangenheit"></td>
-        <td><!-- iframe src="https://free.timeanddate.com/clock/i81zgrr0/n259/szw110/szh110/hoc000/hbw4/cf100/hgr0/fiv0/fdi60/mqc000/mqs3/mql25/mqw6/mqd96/mhc000/mhs3/mhl20/mhw6/mhd96/mmc000/mms3/mml10/mmw2/mmd96/hhw16/hmw16/hmr4/hsc000/hss3/hsl90" frameborder="0" width="110" height="110"></iframe-->
-</td>
+        <td id="vergangenheit_label">Entwertbare Tests</td>
+        <td id="vergangenheit">00:00</td>
+        <td><!-- iframe src="https://free.timeanddate.com/clock/i81zgrr0/n259/szw110/szh110/hoc000/hbw4/cf100/hgr0/fiv0/fdi60/mqc000/mqs3/mql25/mqw6/mqd96/mhc000/mhs3/mhl20/mhw6/mhd96/mmc000/mms3/mml10/mmw2/mmd96/hhw16/hmw16/hmr4/hsc000/hss3/hsl90" frameborder="0" width="110" height="110"></iframe--></td>
       </tr>
       <tr>
         <td>Aktuelle Uhrzeit</td>
-        <td> <span id="aktuell" /> <!-- iframe src="https://free.timeanddate.com/clock/i81zgrr0/n259/szw110/szh110/hoc000/hbw4/cf100/hgr0/fiv0/fdi60/mqc000/mqs3/mql25/mqw6/mqd96/mhc000/mhs3/mhl20/mhw6/mhd96/mmc000/mms3/mml10/mmw2/mmd96/hhw16/hmw16/hmr4/hsc000/hss3/hsl90" frameborder="0" width="110" height="110"></iframe-->
-</td>
+        <td><span id="aktuell">99:99</span>
+        <td><!-- iframe src="https://free.timeanddate.com/clock/i81zgrr0/n259/szw110/szh110/hoc000/hbw4/cf100/hgr0/fiv0/fdi60/mqc000/mqs3/mql25/mqw6/mqd96/mhc000/mhs3/mhl20/mhw6/mhd96/mmc000/mms3/mml10/mmw2/mmd96/hhw16/hmw16/hmr4/hsc000/hss3/hsl90" frameborder="0" width="110" height="110"></iframe--></td>
       </tr>
     </table>
     
@@ -69,7 +70,7 @@
           <th>Ende</th>
         </tr>
       </thead>
-      <tbody id="timers" />
+      <tbody id="timers"></tbody>
     </table>
 
     <script>
@@ -113,8 +114,8 @@
       function remain(end) {
         const current = new Date();
         const diff = Math.floor((end - current) / 1000);
-        const minutes = Math.ceil(diff / 60);
-        const seconds = Math.floor(diff % 60)
+        const minutes = Math.ceil (diff / 60);
+        const seconds = Math.floor(diff % 60);
 
         if (minutes > 1) {
           return `${minutes} Minuten`;
@@ -147,11 +148,12 @@
 
       main();
     </script>
-  </body>
+
   <footer>
     <div style="position: absolute; bottom: 10px; right: 10px; text-align:right">
-      <a href="https://andreaswimmer.github.io/timer"  style="color:inherit"><img src="https://www.w3.org/html/logo/downloads/HTML5_Badge.svg" class="text-sized">andreaswimmer.github.io/timer</a><br/>
-      <a href="https://github.com/andreaswimmer/timer" style="color:inherit"><img src="https://github.com/favicon.ico" class="text-sized inverted">github.com/andreaswimmer/timer</a>
+      <a href="https://andreaswimmer.github.io/timer"  style="color:inherit"><img src="https://www.w3.org/html/logo/downloads/HTML5_Badge.svg" alt="HTML 5" class="text-sized">andreaswimmer.github.io/timer</a><br/>
+      <a href="https://github.com/andreaswimmer/timer" style="color:inherit"><img src="https://github.com/favicon.ico" alt="Github" class="text-sized inverted">github.com/andreaswimmer/timer</a>
     </div>
   </footer>
+  </body>
 </html>
