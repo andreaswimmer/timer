@@ -32,13 +32,14 @@
         height: 1em;
       }
       .styled-table tbody tr:nth-of-type(odd) {
-        background-color: #501250;
-      }
-      .styled-table tbody tr:nth-of-type(even) {
         background-color: #5d001e;
       }
-      button:nth-child(odd) {
-        background-color: #111111;
+      .styled-table tbody tr:nth-of-type(even) {
+        background-color: #50125000;
+      }
+      .trash {
+        color: #ffffff;
+        background-color: #000000;
       }
       td, th {
         text-align: left;
@@ -46,126 +47,131 @@
       }
     </style>
   </head>
-
   <body class="header background-gradient">
-    <table>
+    <div style="position: fixed; z-index: -99; width: 100%; height: 100%">
+      <iframe frameborder="0" height="100%" width="100%" allow="autoplay" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin"
+        src="https://www.youtube-nocookie.com/embed/t_S_cN2re4g?autoplay=1&controls=0&showinfo=0&autohide=1&mute=1&modestbranding=1&loop=1"></iframe>
+    </div>
+    <div style="position: fixed;  width: 100%; height: 100%"> <!-- div over the video to block clicks -->
+      <table>
         <tbody>
-      <tr>
-        <td id="vergangenheit_label">Entwertbare Tests</td>
-        <td id="vergangenheit">00:00</td>
-        <td><!-- iframe src="https://free.timeanddate.com/clock/i81zgrr0/n259/szw110/szh110/hoc000/hbw4/cf100/hgr0/fiv0/fdi60/mqc000/mqs3/mql25/mqw6/mqd96/mhc000/mhs3/mhl20/mhw6/mhd96/mmc000/mms3/mml10/mmw2/mmd96/hhw16/hmw16/hmr4/hsc000/hss3/hsl90" frameborder="0" width="110" height="110"></iframe--></td>
-      </tr>
-      <tr>
-        <td>Aktuelle Uhrzeit</td>
-        <td><span id="aktuell">99:99</span>
-        <td><!-- iframe src="https://free.timeanddate.com/clock/i81zgrr0/n259/szw110/szh110/hoc000/hbw4/cf100/hgr0/fiv0/fdi60/mqc000/mqs3/mql25/mqw6/mqd96/mhc000/mhs3/mhl20/mhw6/mhd96/mmc000/mms3/mml10/mmw2/mmd96/hhw16/hmw16/hmr4/hsc000/hss3/hsl90" frameborder="0" width="110" height="110"></iframe--></td>
-      </tr>
+          <tr>
+            <td id="vergangenheit_label">Entwertbare Tests</td>
+            <td id="vergangenheit">00:00</td>
+            <td><!-- iframe src="https://free.timeanddate.com/clock/i81zgrr0/n259/szw110/szh110/hoc000/hbw4/cf100/hgr0/fiv0/fdi60/mqc000/mqs3/mql25/mqw6/mqd96/mhc000/mhs3/mhl20/mhw6/mhd96/mmc000/mms3/mml10/mmw2/mmd96/hhw16/hmw16/hmr4/hsc000/hss3/hsl90" frameborder="0" width="110" height="110"></iframe--></td>
+          </tr>
+          <tr>
+            <td>Aktuelle Uhrzeit</td>
+            <td><span id="aktuell">99:99</span>
+            <td><!-- iframe src="https://free.timeanddate.com/clock/i81zgrr0/n259/szw110/szh110/hoc000/hbw4/cf100/hgr0/fiv0/fdi60/mqc000/mqs3/mql25/mqw6/mqd96/mhc000/mhs3/mhl20/mhw6/mhd96/mmc000/mms3/mml10/mmw2/mmd96/hhw16/hmw16/hmr4/hsc000/hss3/hsl90" frameborder="0" width="110" height="110"></iframe--></td>
+          </tr>
         </tbody>
-    </table>
-    
-	  <input id="chosenDifference" type="number" style="width:3em" value="15" onblur="thereMustAlwaysBeAValueInChosenDifference()">
-    <label for="chosenDifference">Minuten</label>
-    <button onclick="startTimer()">Timer Starten</button>
-    
-    <table class="styled-table">
-      <thead>
-        <tr>
-          <th>Start</th>
-          <th>Verbleibend</th>
-          <th>Ende</th>
-        </tr>
-      </thead>
-      <tbody id="timers"></tbody>
-    </table>
+      </table>
+      
+      <input id="chosenDifference" type="number" style="width:3em" value="15" onblur="thereMustAlwaysBeAValueInChosenDifference()">
+      <label for="chosenDifference">Minuten</label>
+      <button onclick="startTimer()">Timer Starten</button>
+        
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Start</th>
+            <th>Verbleibend</th>
+            <th>Ende</th>
+          </tr>
+        </thead>
+        <tbody id="timers"></tbody>
+      </table>
 
-    <script>
-      function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-      }
-
-      function thereMustAlwaysBeAValueInChosenDifference() {
-        let parsed = parseInt(chosenDifference.value, 10);
-        if ((chosenDifference.value == '') || isNaN(parsed) || (parsed == 0)) {
-          chosenDifference.value = '15';
-          parsed = 15;
+      <script>
+        function sleep(ms) {
+          return new Promise(resolve => setTimeout(resolve, ms));
         }
-        if (parsed < 0 ) {
-          document.getElementById('vergangenheit_label').innerText = "Zu schreibende Zeit";
-        } else {
-          document.getElementById('vergangenheit_label').innerText = "Entwertbare Tests";
-        }
-        return parsed * 60 * 1000;
 
-      }
-
-      function deleteButton(id) {
-        document.getElementById(id).remove();
-      }
-
-      var chime = new Audio("chime.mp3");
-      chime.volume = 1;
-
-      let nextId = 0;
-      const timers = document.getElementById('timers');
-
-      function startTimer() {
-        const current = new Date();
-        const row = timers.insertRow(-1);
-        const id = "row" + nextId++;
-        row.id = id;
-        row.data = new Date(current.getTime() + Math.abs(thereMustAlwaysBeAValueInChosenDifference()));
-        row.class = 'active-row';
-        const cell0 = row.insertCell(0).innerText = current.toLocaleTimeString();
-        const cell1 = row.insertCell(1);
-        const cell2 = row.insertCell(2).innerText = row.data.toLocaleTimeString();
-        cell0.class = 'active-row';
-        const cell3 = row.insertCell(3).innerHTML = `<button class="trash" onclick='deleteButton("${id}")'>🗑</button>`;
-        updateRow(row);
-      }
-
-      function remain(end) {
-        const current = new Date();
-        const diff = Math.floor((end - current) / 1000);
-        const minutes = Math.ceil (diff / 60);
-        const seconds = Math.floor(diff % 60);
-
-        if (minutes > 1) {
-          return `${minutes} Minuten`;
-        } else if (seconds > 0) {
-        if(seconds == 1) {
-          chime.play();
-        }
-          return `${seconds} Sekunde${seconds>1 ? "n" : ""}`;
-        } else {
-          return '<i>Fertig</i>';
-        }
-      }
-
-      function updateRow(row) {
-        row.cells[1].innerHTML = remain(row.data);
-      }
-
-
-      async function main() {
-        const aktuell = document.getElementById('aktuell');
-        const vergangenheit = document.getElementById('vergangenheit');
-        while (true) {
-          const currentTime = new Date();
-          aktuell.innerText = currentTime.toLocaleTimeString();
-          vergangenheit.innerText = new Date(currentTime - thereMustAlwaysBeAValueInChosenDifference()).toLocaleTimeString();
-          for (var row of timers.rows) {
-            updateRow(row);
+        function thereMustAlwaysBeAValueInChosenDifference() {
+          let parsed = parseInt(chosenDifference.value, 10);
+          if ((chosenDifference.value == '') || isNaN(parsed) || (parsed == 0)) {
+            chosenDifference.value = '15';
+            parsed = 15;
           }
-          await sleep(500);
-        }
-      }
+          if (parsed < 0 ) {
+            document.getElementById('vergangenheit_label').innerText = "Zu schreibende Zeit";
+          } else {
+            document.getElementById('vergangenheit_label').innerText = "Entwertbare Tests";
+          }
+          return parsed * 60 * 1000;
 
-      main();
-    </script>
-    <div style="position: absolute; bottom: 10px; right: 10px; text-align:right">
-      <a href="https://andreaswimmer.github.io/timer"><img src="HTML5_1Color_White.svg" alt="HTML 5" class="text-sized">andreaswimmer.github.io/timer</a><br/>
-      <a href="https://github.com/andreaswimmer/timer"><img src="GitHub-Mark-Light-32px.png" alt="Github" class="text-sized">github.com/andreaswimmer/timer</a><br/>
-	  <a href="https://freesound.org/people/FoolBoyMedia/sounds/352661/">Complete Chime</a> by <a href="https://www.foolboymedia.co.uk/">FoolBoyMedia</a> is licensed under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+        }
+
+        function deleteButton(id) {
+          document.getElementById(id).remove();
+        }
+
+        var chime = new Audio("chime.mp3");
+        chime.volume = 1;
+
+        let nextId = 0;
+        const timers = document.getElementById('timers');
+
+        function startTimer() {
+          const current = new Date();
+          const row = timers.insertRow(-1);
+          const id = "row" + nextId++;
+          row.id = id;
+          row.data = new Date(current.getTime() + Math.abs(thereMustAlwaysBeAValueInChosenDifference()));
+          row.class = 'active-row';
+          const cell0 = row.insertCell(0).innerText = current.toLocaleTimeString();
+          const cell1 = row.insertCell(1);
+          const cell2 = row.insertCell(2).innerText = row.data.toLocaleTimeString();
+          cell0.class = 'active-row';
+          const cell3 = row.insertCell(3).innerHTML = `<button class="trash" onclick='deleteButton("${id}")'>🗑</button>`;
+          updateRow(row);
+        }
+
+        function remain(end) {
+          const current = new Date();
+          const diff = Math.floor((end - current) / 1000);
+          const minutes = Math.ceil (diff / 60);
+          const seconds = Math.floor(diff % 60);
+
+          if (minutes > 1) {
+            return `${minutes} Minuten`;
+          } else if (seconds > 0) {
+          if(seconds == 1) {
+            chime.play();
+          }
+            return `${seconds} Sekunde${seconds>1 ? "n" : ""}`;
+          } else {
+            return '<i>Fertig</i>';
+          }
+        }
+
+        function updateRow(row) {
+          row.cells[1].innerHTML = remain(row.data);
+        }
+
+
+        async function main() {
+          const aktuell = document.getElementById('aktuell');
+          const vergangenheit = document.getElementById('vergangenheit');
+          while (true) {
+            const currentTime = new Date();
+            aktuell.innerText = currentTime.toLocaleTimeString();
+            vergangenheit.innerText = new Date(currentTime - thereMustAlwaysBeAValueInChosenDifference()).toLocaleTimeString();
+            for (var row of timers.rows) {
+              updateRow(row);
+            }
+            await sleep(500);
+            }
+        }
+
+        main();
+      </script>
+      <div style="position: absolute; bottom: 10px; right: 10px; text-align:right">
+        <a href="https://github.com/andreaswimmer/timer" target="_blank"><img src="GitHub-Mark-Light-32px.png" alt="Github" class="text-sized">github.com/andreaswimmer/timer</a><br>
+        <a href="https://www.youtube.com/watch?v=t_S_cN2re4g" target="_blank">Deep Ocean</a> by <a href="https://www.youtube.com/c/bbcearth" target="_blank">BBC Earth</a> hosted on <a href="https://youtube.com" target="_blank">YouTube</a><br>
+        <a href="https://freesound.org/people/FoolBoyMedia/sounds/352661/" target="_blank">Complete Chime</a> by <a href="https://www.foolboymedia.co.uk/" target="_blank">FoolBoyMedia</a> is licensed under <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank">CC BY 3.0</a><br>
+      </div>
     </div>
   </body>
 </html>
