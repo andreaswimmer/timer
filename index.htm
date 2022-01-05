@@ -1,4 +1,4 @@
-﻿<!doctype html>
+﻿<!DOCTYPE html>
 <html lang="de">
   <head>
     <title>Antigen Timer</title>
@@ -21,7 +21,7 @@
       }
       body {
         margin: 0px;
-		color: #ffffff;
+        color: #ffffff;
       }
       /*End background gradient*/
       .styled-table {
@@ -49,6 +49,7 @@
 
   <body class="header background-gradient">
     <table>
+        <tbody>
       <tr>
         <td id="vergangenheit_label">Entwertbare Tests</td>
         <td id="vergangenheit">00:00</td>
@@ -59,16 +60,10 @@
         <td><span id="aktuell">99:99</span>
         <td><!-- iframe src="https://free.timeanddate.com/clock/i81zgrr0/n259/szw110/szh110/hoc000/hbw4/cf100/hgr0/fiv0/fdi60/mqc000/mqs3/mql25/mqw6/mqd96/mhc000/mhs3/mhl20/mhw6/mhd96/mmc000/mms3/mml10/mmw2/mmd96/hhw16/hmw16/hmr4/hsc000/hss3/hsl90" frameborder="0" width="110" height="110"></iframe--></td>
       </tr>
+        </tbody>
     </table>
     
-
-    <input
-      id="chosenDifference"
-      type="number"
-      style="width:3em"
-      value="15"
-      onblur="thereMustAlwaysBeAValueInChosenDifference()"
-    />
+	  <input id="chosenDifference" type="number" style="width:3em" value="15" onblur="thereMustAlwaysBeAValueInChosenDifference()">
     <label for="chosenDifference">Minuten</label>
     <button onclick="startTimer()">Timer Starten</button>
     
@@ -158,7 +153,6 @@
           const currentTime = new Date();
           aktuell.innerText = currentTime.toLocaleTimeString();
           vergangenheit.innerText = new Date(currentTime - thereMustAlwaysBeAValueInChosenDifference()).toLocaleTimeString();
-
           for (var row of timers.rows) {
             updateRow(row);
           }
@@ -168,13 +162,10 @@
 
       main();
     </script>
-
-  <footer>
     <div style="position: absolute; bottom: 10px; right: 10px; text-align:right">
       <a href="https://andreaswimmer.github.io/timer"><img src="HTML5_1Color_White.svg" alt="HTML 5" class="text-sized">andreaswimmer.github.io/timer</a><br/>
       <a href="https://github.com/andreaswimmer/timer"><img src="GitHub-Mark-Light-32px.png" alt="Github" class="text-sized">github.com/andreaswimmer/timer</a><br/>
 	  <a href="https://freesound.org/people/FoolBoyMedia/sounds/352661/">Complete Chime</a> by <a href="https://www.foolboymedia.co.uk/">FoolBoyMedia</a> is licensed under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
     </div>
-  </footer>
   </body>
 </html>
