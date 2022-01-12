@@ -21,7 +21,17 @@
       }
       body {
         margin: 0px;
-        color: #ffffff;
+        color: #ffffff;     
+        text-shadow: /* https://stackoverflow.com/questions/26634201/add-stroke-around-text-on-the-outside-with-css */
+            -1px -1px 0 #000,
+             0   -1px 0 #000,
+             1px -1px 0 #000,
+             1px  0   0 #000,
+             1px  1px 0 #000,
+             0    1px 0 #000,
+            -1px  1px 0 #000,
+            -1px  0   0 #000;
+        
       }
       /*End background gradient*/
       .styled-table {
@@ -45,6 +55,10 @@
         text-align: left;
         padding: 5px;
       }
+	  .footer {
+	    font-size:12pt;
+	  }
+	  
     </style>
   </head>
   <body class="header background-gradient">
@@ -53,35 +67,35 @@
         src="https://www.youtube-nocookie.com/embed/t_S_cN2re4g?autoplay=1&controls=0&showinfo=0&autohide=1&mute=1&modestbranding=1&loop=1"></iframe>
     </div>
     <div style="position: fixed;  width: 100%; height: 100%"> <!-- div over the video to block clicks -->
-      <table>
-        <tbody>
-          <tr>
-            <td id="vergangenheit_label">Entwertbare Tests</td>
+      <table style="width: 100%; ">
+        <tbody style="display: grid; place-items: center;">
+          <tr style="font-size: 50pt;">
+            <td id="vergangenheit_label">Entwertbare Tests&nbsp;&nbsp;&nbsp;</td>
             <td id="vergangenheit">00:00</td>
-            <td><!-- iframe src="https://free.timeanddate.com/clock/i81zgrr0/n259/szw110/szh110/hoc000/hbw4/cf100/hgr0/fiv0/fdi60/mqc000/mqs3/mql25/mqw6/mqd96/mhc000/mhs3/mhl20/mhw6/mhd96/mmc000/mms3/mml10/mmw2/mmd96/hhw16/hmw16/hmr4/hsc000/hss3/hsl90" frameborder="0" width="110" height="110"></iframe--></td>
           </tr>
-          <tr>
-            <td>Aktuelle Uhrzeit</td>
+          <tr style="font-size: 55pt; font-weight: bold; ">
+            <td>Aktuelle Uhrzeit&nbsp;&nbsp;&nbsp;</td>
             <td><span id="aktuell">99:99</span>
-            <td><!-- iframe src="https://free.timeanddate.com/clock/i81zgrr0/n259/szw110/szh110/hoc000/hbw4/cf100/hgr0/fiv0/fdi60/mqc000/mqs3/mql25/mqw6/mqd96/mhc000/mhs3/mhl20/mhw6/mhd96/mmc000/mms3/mml10/mmw2/mmd96/hhw16/hmw16/hmr4/hsc000/hss3/hsl90" frameborder="0" width="110" height="110"></iframe--></td>
           </tr>
         </tbody>
       </table>
-      
-      <input id="chosenDifference" type="number" style="width:3em" value="15" onblur="thereMustAlwaysBeAValueInChosenDifference()">
-      <label for="chosenDifference">Minuten</label>
-      <button onclick="startTimer()">Timer Starten</button>
+      <br/>
+      <div style="transform: translateX(1%)">
+        <input id="chosenDifference" type="number" style="width:3em" value="15" onblur="thereMustAlwaysBeAValueInChosenDifference()">
+        <label for="chosenDifference">Minuten</label>
+        <button onclick="startTimer()">Timer Starten</button>
         
-      <table class="styled-table">
-        <thead>
-          <tr>
-            <th>Start</th>
-            <th>Verbleibend</th>
-            <th>Ende</th>
-          </tr>
-        </thead>
-        <tbody id="timers"></tbody>
-      </table>
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>Start</th>
+              <th>Verbleibend</th>
+              <th>Ende</th>
+            </tr>
+          </thead>
+          <tbody id="timers"></tbody>
+        </table>
+      </div>
 
       <script>
         function sleep(ms) {
@@ -95,9 +109,9 @@
             parsed = 15;
           }
           if (parsed < 0 ) {
-            document.getElementById('vergangenheit_label').innerText = "Zu schreibende Zeit";
+            document.getElementById('vergangenheit_label').innerHTML = "Zu schreibende Zeit&nbsp;&nbsp;&nbsp;";
           } else {
-            document.getElementById('vergangenheit_label').innerText = "Entwertbare Tests";
+            document.getElementById('vergangenheit_label').innerHTML = "Entwertbare Tests&nbsp;&nbsp;&nbsp;";
           }
           return parsed * 60 * 1000;
 
@@ -167,7 +181,7 @@
 
         main();
       </script>
-      <div style="position: absolute; bottom: 10px; right: 10px; text-align:right">
+      <div class="footer" style="position: absolute; bottom: 10px; right: 10px; text-align:right">
         <a href="https://github.com/andreaswimmer/timer" target="_blank"><img src="GitHub-Mark-Light-32px.png" alt="Github" class="text-sized">github.com/andreaswimmer/timer</a><br>
         <a href="https://www.youtube.com/watch?v=t_S_cN2re4g" target="_blank">Deep Ocean</a> by <a href="https://www.youtube.com/c/bbcearth" target="_blank">BBC Earth</a> hosted on <a href="https://youtube.com" target="_blank">YouTube</a><br>
         <a href="https://freesound.org/people/FoolBoyMedia/sounds/352661/" target="_blank">Complete Chime</a> by <a href="https://www.foolboymedia.co.uk/" target="_blank">FoolBoyMedia</a> is licensed under <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank">CC BY 3.0</a><br>
